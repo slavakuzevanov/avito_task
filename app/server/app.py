@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from fastapi import FastAPI
 from fastapi_utils.tasks import repeat_every
 
-from app.server.database import (
+from server.database import (
     do_count_all,
     do_count_by_region_q,
     do_find_one_by_region_q,
@@ -15,7 +15,7 @@ from app.server.database import (
     do_find_all,
     MONGO_DETAILS
 )
-from app.server.models.responsemodels import (
+from server.models.responsemodels import (
     ErrorResponseModel,
     ResponseModel
 )
@@ -93,7 +93,7 @@ async def get_top5(id: int):
 @app.on_event('startup')
 @repeat_every(seconds=60 * 60, wait_first=True)  # 1 hour
 def add_new_info_to_db() -> None:
-    client = pymongo.MongoClient('avito_mongodb', port=5000, user='root', password='pass')
+    client = pymongo.MongoClient('avito_mongodb', port=27017)
     database = client.avito_db
     collection = database['avito_tb']
     for item in collection.find({}):

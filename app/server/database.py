@@ -2,7 +2,7 @@ import motor.motor_asyncio
 
 MONGO_DETAILS = "mongodb://localhost:27017"
 
-client = motor.motor_asyncio.AsyncIOMotorClient('avito_mongodb', port=5000, user='root', password='pass')
+client = motor.motor_asyncio.AsyncIOMotorClient('db', port=27017)
 
 database = client.avito_db
 

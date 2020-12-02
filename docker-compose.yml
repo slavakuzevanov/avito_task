@@ -1,19 +1,23 @@
-app:
-  build: .
-  command: python -u .app/server/main.py
-  ports:
-    - "8000:8000"
-  links:
-    - db
+services:
+  app:
+    build: app/
+    command: python -u ./main.py
+    ports:
+      - "8000:8000"
+    links:
+      - db
+    networks:
+      - net
+    depends_on:
+      - db
 
-db:
-  image: mongo:latest
-  hostname: avito_mongodb
-  environment:
-    - MONGO_INITDB_DATABASE=avito_db
-    - MONGO_INITDB_ROOT_USERNAME=root
-    - MONGO_INITDB_ROOT_PASSWORD=pass
-  volumes:
-    - mongodbdata:/data/db
-  ports:
-    - "5000:5000"
+  db:
+    image: mongo:latest
+    hostname: avito_mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=avito_db
+    networks:
+      - net
+
+networks:
+  net:
