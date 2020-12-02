@@ -93,7 +93,7 @@ async def get_top5(id: int):
 @app.on_event('startup')
 @repeat_every(seconds=60 * 60, wait_first=True)  # 1 hour
 def add_new_info_to_db() -> None:
-    client = pymongo.MongoClient(MONGO_DETAILS)
+    client = pymongo.MongoClient('avito_mongodb', port=5000, user='root', password='pass')
     database = client.avito_db
     collection = database['avito_tb']
     for item in collection.find({}):
